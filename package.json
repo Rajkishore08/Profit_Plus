@@ -1,22 +1,20 @@
 {
   "name": "profit-plus",
   "version": "1.0.0",
-  "description": "Full-stack Profit Plus application",
+  "description": "Profit Plus full-stack application",
   "scripts": {
-    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
     "start-backend": "npm --prefix backend run start",
     "start-frontend": "npm --prefix frontend run start",
-    "build": "npm run build-backend && npm run build-frontend",
-    "build-backend": "npm --prefix backend run build",
-    "build-frontend": "npm --prefix frontend run build",
-    "dev": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
-    "dev-backend": "npm --prefix backend run dev",
-    "dev-frontend": "npm --prefix frontend run start"
-  },
-  "engines": {
-    "node": "20.x"
+    "build-backend": "npm --prefix backend install && npm --prefix backend run build",
+    "build-frontend": "npm --prefix frontend install && npm --prefix frontend run build",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "build": "npm install && npm run build-backend && npm run build-frontend"
   },
   "dependencies": {
     "concurrently": "^7.5.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "20.x"
   }
 }
