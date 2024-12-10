@@ -48,12 +48,12 @@ app.use('/api/products', productRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder to serve the React app
+  // Set the static folder to the build directory
   app.use(express.static(path.join(__dirname, 'client', 'build')));
 
   // Serve the React app for any route that doesn't match the API
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.js'));
   });
 }
 
