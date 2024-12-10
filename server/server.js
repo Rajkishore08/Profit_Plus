@@ -13,8 +13,8 @@ const app = express();
 
 // Configuration Variables
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://tpavimalini:bN7rsy2UEYOVdYqE@cluster0.vvmwz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const JWT_SECRET = process.env.JWT_SECRET || '80aaea73d46885cd6b0807e4541722ed0e6b6d71df78bb3b78f184dc6137e654d423cc9671865ae4c6f27647b5e0779c4bdff3191e395570696136487e076f9b';
+const MONGODB_URI = process.env.MONGODB_URI || 'your-mongodb-connection-string';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-jwt-secret';
 
 // Connect to MongoDB
 const connectDB = async () => {
