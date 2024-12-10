@@ -4,13 +4,13 @@
   "description": "Profit Plus Application (Fullstack)",
   "main": "server.js",
   "scripts": {
-    "start": "npm run start-server && npm run start-client",
+    "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-server": "npm --prefix server run start",
     "start-client": "npm --prefix client run start",
     "build": "npm install && npm run build-server && npm run build-client",
     "build-server": "npm --prefix server install && npm --prefix server run build",
     "build-client": "npm --prefix client install && npm --prefix client run build",
-    "dev": "npm run dev-server && npm run dev-client",
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
     "dev-server": "npm --prefix server run dev",
     "dev-client": "npm --prefix client run start"
   },
@@ -20,6 +20,8 @@
   "keywords": [],
   "author": "Raj Kishore",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "concurrently": "^7.4.0"  // Install concurrently package
+  },
   "devDependencies": {}
 }
