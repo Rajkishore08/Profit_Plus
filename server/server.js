@@ -1,5 +1,5 @@
 const express = require('express');
-const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/order');
 const collectionRoutes = require('./routes/collection');
@@ -9,18 +9,32 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+
+// Configuration Variables
 const PORT = process.env.PORT || 5000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://tpavimalini:bN7rsy2UEYOVdYqE@cluster0.vvmwz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const JWT_SECRET = process.env.JWT_SECRET || '80aaea73d46885cd6b0807e4541722ed0e6b6d71df78bb3b78f184dc6137e654d423cc9671865ae4c6f27647b5e0779c4bdff3191e395570696136487e076f9b';
 
 // Connect to MongoDB
-connectDB().catch((err) => {
-  console.error("Failed to connect to MongoDB:", err.message);
-  process.exit(1); // Exit if the database connection fails
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error.message);
+    process.exit(1); // Exit process on failure
+  }
+};
+
+connectDB();
 
 // Middleware
-app.use(cors({ 
-  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000', 
-  credentials: true 
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+  credentials: true
 }));
 app.use(express.json());
 
@@ -39,9 +53,9 @@ app.get('/api/health', (req, res) => {
 // Global Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({ 
-    success: false, 
-    message: err.message || 'Internal Server Error' 
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
   });
 });
 
