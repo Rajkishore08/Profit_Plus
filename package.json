@@ -21,7 +21,7 @@
   "author": "Raj Kishore",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.4.0"  // Install concurrently package
+    "concurrently": "^7.4.0"
   },
   "devDependencies": {}
 }
