@@ -1,5 +1,5 @@
 {
-  "name": "profit-plus-client",
+  "name": "profit-plus-frontend",
   "version": "1.0.0",
   "description": "Frontend for Profit Plus Application",
   "main": "src/index.js",
@@ -27,23 +27,5 @@
     "react-select": "^5.8.2",
     "redux": "^4.2.1",
     "styled-components": "^6.1.13"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
