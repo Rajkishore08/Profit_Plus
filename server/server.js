@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/order');
 const collectionRoutes = require('./routes/collection');
@@ -44,6 +45,17 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/products', productRoutes);
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+  // Serve the React app for any route that doesn't match the API
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // Health Check Route
 app.get('/api/health', (req, res) => {
