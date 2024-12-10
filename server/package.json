@@ -1,18 +1,15 @@
 {
-  "name": "profit-plus",
+  "name": "profit-plus-backend",
   "version": "1.0.0",
   "description": "Backend for Profit Plus application",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "npm install"
+    "dev": "nodemon server.js"
   },
   "engines": {
     "node": "20.x"
   },
-  "keywords": [],
-  "author": "Your Name",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -25,9 +22,7 @@
     "mongoose": "^8.7.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.15",
-    "xlsx": "^0.18.5"
-  },
-  "devDependencies": {
+    "xlsx": "^0.18.5",
     "nodemon": "^3.0.1"
   }
 }
