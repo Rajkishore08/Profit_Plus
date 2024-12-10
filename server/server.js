@@ -48,7 +48,7 @@ app.use('/api/products', productRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
+  // Set static folder to serve the React app
   app.use(express.static(path.join(__dirname, 'client', 'build')));
 
   // Serve the React app for any route that doesn't match the API
