@@ -17,9 +17,6 @@
   "engines": {
     "node": "20.x"
   },
-  "keywords": [],
-  "author": "Raj Kishore",
-  "license": "ISC",
   "dependencies": {
     "concurrently": "^7.4.0"
   },
