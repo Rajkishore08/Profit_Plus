@@ -12,7 +12,7 @@ const OwnerLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post('http://localhost:5001/api/auth/login', { email, password });
       const { token, role, username } = response.data;
 
       localStorage.setItem('token', token);
