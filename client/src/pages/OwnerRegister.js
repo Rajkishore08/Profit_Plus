@@ -25,7 +25,7 @@ const OwnerRegister = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register-owner', formData);
+      const response = await axios.post('http://localhost:5001/api/auth/register-owner', formData);
       setMessage(response.data.message);
 
       setTimeout(() => {
