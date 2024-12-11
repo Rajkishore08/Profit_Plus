@@ -4,25 +4,28 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
-// Login Route (For both Owner and Salesperson)
+// Environment variables
+const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+
+// Login Route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     // Generate JWT token
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
-      'your_jwt_secret', 
+      jwtSecret,
       { expiresIn: '1h' }
     );
 
@@ -47,18 +50,26 @@ router.post('/register-owner', async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
-    // Create new owner user
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username already taken' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newOwner = new User({
       username,
       email,
       password: hashedPassword,
-      role: 'owner', // Assign owner role
+      role: 'owner',
     });
 
     await newOwner.save();
@@ -78,18 +89,26 @@ router.post('/register-salesperson', async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
-    // Create new salesperson user
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username already taken' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newSalesperson = new User({
       username,
       email,
       password: hashedPassword,
-      role: 'salesperson', // Assign salesperson role
+      role: 'salesperson',
     });
 
     await newSalesperson.save();
