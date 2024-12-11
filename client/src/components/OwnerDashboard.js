@@ -19,6 +19,7 @@ const OwnerDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+  const token = localStorage.getItem('token');
     
 
     const fetchData = async () => {
