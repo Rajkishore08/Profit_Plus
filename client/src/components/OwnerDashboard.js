@@ -19,12 +19,7 @@ const OwnerDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.warn('No token found, redirecting to login...');
-      navigate('/');
-      return;
-    }
+    
 
     const fetchData = async () => {
       try {
