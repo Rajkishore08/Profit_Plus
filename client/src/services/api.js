@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 // Base URLs for different API endpoints
-const API_AUTH_URL = 'http://localhost:3000/api/auth';
-const API_ORDER_URL = 'http://localhost:3000/api/orders';
-const API_COLLECTION_URL = 'http://localhost:3000/api/collections';
-const API_CUSTOMER_URL = 'http://localhost:3000/api/customers';
-const API_PRODUCT_URL = 'http://localhost:3000/api/products';
+const API_AUTH_URL = 'http://localhost:5000/api/auth';
+const API_ORDER_URL = 'http://localhost:5000/api/orders';
+const API_COLLECTION_URL = 'http://localhost:5000/api/collections';
+const API_CUSTOMER_URL = 'http://localhost:5000/api/customers';
+const API_PRODUCT_URL = 'http://localhost:5000/api/products';
 
 // Create an Axios instance with default settings
 export const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:5000',
   headers: { 'Content-Type': 'application/json' },
 });
 
