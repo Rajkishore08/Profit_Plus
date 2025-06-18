@@ -1,15 +1,11 @@
 import axios from 'axios';
 
 // Base URLs for different API endpoints
-const API_AUTH_URL = 'http://localhost:5000/api/auth';
-const API_ORDER_URL = 'http://localhost:5000/api/orders';
-const API_COLLECTION_URL = 'http://localhost:5000/api/collections';
-const API_CUSTOMER_URL = 'http://localhost:5000/api/customers';
-const API_PRODUCT_URL = 'http://localhost:5000/api/products';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 
 // Create an Axios instance with default settings
 export const api = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -30,6 +26,15 @@ api.interceptors.response.use(
   (error) => {
     const errorMsg = error.response?.data?.message || 'An error occurred. Please try again.';
     console.error('API Error:', errorMsg);
+    
+    // Handle authentication errors
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('username');
+      window.location.href = '/';
+    }
+    
     return Promise.reject({ message: errorMsg });
   }
 );
@@ -37,26 +42,26 @@ api.interceptors.response.use(
 // Authentication functions
 export const loginUser = async (credentials) => {
   try {
-    const response = await api.post(`${API_AUTH_URL}/login`, credentials);
+    const response = await api.post('/api/auth/login', credentials);
     return response.data;
   } catch (error) {
-    throw error; // Pass the error for handling in the calling function
+    throw error;
   }
 };
 
 // Order functions
 export const addOrder = async (orderData) => {
   try {
-    const response = await api.post(`${API_ORDER_URL}/add-order`, orderData);
+    const response = await api.post('/api/orders/add-order', orderData);
     return response.data;
   } catch (error) {
-    throw error; // Let the component handle the error
+    throw error;
   }
 };
 
 export const getOrders = async () => {
   try {
-    const response = await api.get(`${API_ORDER_URL}`);
+    const response = await api.get('/api/orders/all-orders');
     return response.data;
   } catch (error) {
     throw error;
@@ -66,7 +71,7 @@ export const getOrders = async () => {
 // Collection functions
 export const addCollection = async (collectionData) => {
   try {
-    const response = await api.post(`${API_COLLECTION_URL}/add-collection`, collectionData);
+    const response = await api.post('/api/collections/add-collection', collectionData);
     return response.data;
   } catch (error) {
     throw error;
@@ -75,7 +80,7 @@ export const addCollection = async (collectionData) => {
 
 export const getCollections = async () => {
   try {
-    const response = await api.get(`${API_COLLECTION_URL}`);
+    const response = await api.get('/api/collections');
     return response.data;
   } catch (error) {
     throw error;
@@ -101,4 +106,3 @@ export const getProducts = async () => {
     throw new Error('Failed to load products.');
   }
 };
-

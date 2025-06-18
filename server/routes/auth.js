@@ -5,7 +5,7 @@ const User = require('../models/User');
 const router = express.Router();
 
 // Environment variables
-const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret';
 
 // Login Route
 router.post('/login', async (req, res) => {
@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
       jwtSecret,
-      { expiresIn: '1h' }
+      { expiresIn: '24h' }
     );
 
     res.status(200).json({
@@ -50,21 +50,18 @@ router.post('/register-owner', async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    if (password.length < 8) {
-      return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
-      return res.status(400).json({ message: 'Email already registered' });
+      return res.status(400).json({ 
+        message: existingUser.email === email ? 'Email already registered' : 'Username already taken' 
+      });
     }
 
-    const existingUsername = await User.findOne({ username });
-    if (existingUsername) {
-      return res.status(400).json({ message: 'Username already taken' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
     const newOwner = new User({
       username,
       email,
@@ -89,21 +86,18 @@ router.post('/register-salesperson', async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    if (password.length < 8) {
-      return res.status(400).json({ message: 'Password must be at least 8 characters long' });
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
-      return res.status(400).json({ message: 'Email already registered' });
+      return res.status(400).json({ 
+        message: existingUser.email === email ? 'Email already registered' : 'Username already taken' 
+      });
     }
 
-    const existingUsername = await User.findOne({ username });
-    if (existingUsername) {
-      return res.status(400).json({ message: 'Username already taken' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
     const newSalesperson = new User({
       username,
       email,
