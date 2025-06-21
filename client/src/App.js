@@ -17,10 +17,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/owner-login" element={<OwnerLogin />} />
         <Route path="/salesperson-login" element={<SalespersonLogin />} />
-        <Route path="/owner-register" element={<OwnerRegister />} /> {/* Owner Register */}
-        <Route path="/salesperson-register" element={<SalespersonRegister />} /> {/* Salesperson Register */}
-        <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-        <Route path="/salesperson-dashboard" element={<SalespersonDashboard />} />
+        <Route path="/owner-register" element={<OwnerRegister />} /> 
+        <Route path="/salesperson-register" element={<SalespersonRegister />} /> 
       </Routes>
     </Router>
   );
